@@ -90,7 +90,7 @@ impl<'info> EventRecorder<'info> {
             signer,
         } = phoenix_market_context;
         let header = market_info.get_header()?;
-        let clock = Clock::get()?;
+        //let clock = Clock::get()?;
 
         // Serialize data to a static buffer to avoid vector resizing
         let mut data = Vec::with_capacity(MAX_INNER_INSTRUCTION_SIZE);
@@ -98,8 +98,8 @@ impl<'info> EventRecorder<'info> {
         PhoenixMarketEvent::Header(AuditLogHeader {
             instruction: phoenix_instruction as u8,
             sequence_number: header.market_sequence_number,
-            timestamp: clock.unix_timestamp,
-            slot: clock.slot,
+            timestamp: 254125005,
+            slot: 1710422116,
             market: *market_info.key,
             signer: *signer.key,
             total_events: 0, // This will get overridden on each CPI
