@@ -15,7 +15,7 @@ use crate::quantities::{BaseAtoms, QuoteAtoms, WrapperU64};
 use super::{checkers::TokenAccountInfo, TokenParams};
 
 #[allow(clippy::too_many_arguments)]
-pub(crate) fn try_withdraw<'a, 'info>(
+pub fn try_withdraw<'a, 'info>(
     market_key: &Pubkey,
     base_params: &TokenParams,
     quote_params: &TokenParams,
@@ -54,7 +54,7 @@ pub(crate) fn try_withdraw<'a, 'info>(
     Ok(())
 }
 
-pub(crate) fn maybe_invoke_withdraw<'a, 'info>(
+pub fn maybe_invoke_withdraw<'a, 'info>(
     market_key: &Pubkey,
     mint_key: &Pubkey,
     bump: u8,
@@ -84,7 +84,7 @@ pub(crate) fn maybe_invoke_withdraw<'a, 'info>(
     Ok(())
 }
 
-pub(crate) fn maybe_invoke_deposit<'a, 'info>(
+pub fn maybe_invoke_deposit<'a, 'info>(
     deposit_amount: u64,
     token_program: &AccountInfo<'info>,
     deposit_account: &'a TokenAccountInfo<'a, 'info>,
@@ -113,7 +113,7 @@ pub(crate) fn maybe_invoke_deposit<'a, 'info>(
 }
 
 #[allow(clippy::too_many_arguments)]
-pub(crate) fn try_deposit<'a, 'info>(
+pub fn try_deposit<'a, 'info>(
     token_program: &AccountInfo<'info>,
     quote_account: TokenAccountInfo<'a, 'info>,
     quote_vault: TokenAccountInfo<'a, 'info>,

@@ -137,7 +137,7 @@ impl MultipleOrderPacket {
 }
 
 /// This function performs an IOC or FOK order against the specified market.
-pub(crate) fn process_swap<'a, 'info>(
+pub fn process_swap<'a, 'info>(
     _program_id: &Pubkey,
     market_context: &PhoenixMarketContext<'a, 'info>,
     accounts: &'a [AccountInfo<'info>],
@@ -179,7 +179,7 @@ pub(crate) fn process_swap<'a, 'info>(
 /// using only the funds already available to the trader.
 /// Only users with sufficient funds and a "seat" on the market are authorized
 /// to perform this action.
-pub(crate) fn process_swap_with_free_funds<'a, 'info>(
+pub fn process_swap_with_free_funds<'a, 'info>(
     _program_id: &Pubkey,
     market_context: &PhoenixMarketContext<'a, 'info>,
     accounts: &'a [AccountInfo<'info>],
@@ -218,7 +218,7 @@ pub(crate) fn process_swap_with_free_funds<'a, 'info>(
 
 /// This function performs a Post-Only or Limit order against the specified market.
 /// Only users with a "seat" on the market are authorized to perform this action.
-pub(crate) fn process_place_limit_order<'a, 'info>(
+pub fn process_place_limit_order<'a, 'info>(
     _program_id: &Pubkey,
     market_context: &PhoenixMarketContext<'a, 'info>,
     accounts: &'a [AccountInfo<'info>],
@@ -259,7 +259,7 @@ pub(crate) fn process_place_limit_order<'a, 'info>(
 /// using only the funds already available to the trader.
 /// Only users with sufficient funds and a "seat" on the market are authorized
 /// to perform this action.
-pub(crate) fn process_place_limit_order_with_free_funds<'a, 'info>(
+pub fn process_place_limit_order_with_free_funds<'a, 'info>(
     _program_id: &Pubkey,
     market_context: &PhoenixMarketContext<'a, 'info>,
     accounts: &'a [AccountInfo<'info>],
@@ -300,7 +300,7 @@ pub(crate) fn process_place_limit_order_with_free_funds<'a, 'info>(
 /// Only users with a "seat" on the market are authorized to perform this action.
 ///
 /// Orders at the same price level will be merged.
-pub(crate) fn process_place_multiple_post_only_orders<'a, 'info>(
+pub fn process_place_multiple_post_only_orders<'a, 'info>(
     _program_id: &Pubkey,
     market_context: &PhoenixMarketContext<'a, 'info>,
     accounts: &'a [AccountInfo<'info>],
@@ -332,7 +332,7 @@ pub(crate) fn process_place_multiple_post_only_orders<'a, 'info>(
 /// to perform this action.
 ///
 /// Orders at the same price level will be merged.
-pub(crate) fn process_place_multiple_post_only_orders_with_free_funds<'a, 'info>(
+pub fn process_place_multiple_post_only_orders_with_free_funds<'a, 'info>(
     _program_id: &Pubkey,
     market_context: &PhoenixMarketContext<'a, 'info>,
     accounts: &'a [AccountInfo<'info>],
@@ -357,7 +357,7 @@ pub(crate) fn process_place_multiple_post_only_orders_with_free_funds<'a, 'info>
     )
 }
 
-fn process_new_order<'a, 'info>(
+pub fn process_new_order<'a, 'info>(
     new_order_context: NewOrderContext<'a, 'info>,
     market_context: &PhoenixMarketContext<'a, 'info>,
     order_packet: &mut OrderPacket,

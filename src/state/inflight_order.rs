@@ -3,7 +3,7 @@ use crate::quantities::{AdjustedQuoteLots, BaseLots, QuoteLots, Ticks};
 use super::{SelfTradeBehavior, Side};
 
 #[derive(Copy, Clone, Debug)]
-pub(crate) struct InflightOrder {
+pub struct InflightOrder {
     pub side: Side,
     pub self_trade_behavior: SelfTradeBehavior,
 
@@ -40,7 +40,7 @@ pub(crate) struct InflightOrder {
 
 impl InflightOrder {
     #[allow(clippy::too_many_arguments)]
-    pub(crate) fn new(
+    pub fn new(
         side: Side,
         self_trade_behavior: SelfTradeBehavior,
         limit_price_in_ticks: Ticks,
@@ -67,14 +67,14 @@ impl InflightOrder {
     }
 
     #[inline(always)]
-    pub(crate) fn in_progress(&self) -> bool {
+    pub fn in_progress(&self) -> bool {
         self.base_lot_budget > BaseLots::ZERO
             && self.adjusted_quote_lot_budget > AdjustedQuoteLots::ZERO
             && self.match_limit > 0
             && !self.should_terminate
     }
 
-    pub(crate) fn process_match(
+    pub fn process_match(
         &mut self,
         matched_adjusted_quote_lots: AdjustedQuoteLots,
         matched_base_lots: BaseLots,

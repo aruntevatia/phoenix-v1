@@ -60,7 +60,7 @@ const MAX_EVENT_SIZE: usize = 67;
 /// CPI to the log instruction to log the events and drain the `event_buffer`.
 ///
 /// This enables the program to only have to allocate heap memory once per instruction
-pub(crate) struct EventRecorder<'info> {
+pub struct EventRecorder<'info> {
     phoenix_program: AccountInfo<'info>,
     log_authority: AccountInfo<'info>,
     phoenix_instruction: PhoenixInstruction,
@@ -76,7 +76,7 @@ pub(crate) struct EventRecorder<'info> {
 }
 
 impl<'info> EventRecorder<'info> {
-    pub(crate) fn new<'a>(
+    pub fn new<'a>(
         phoenix_log_context: PhoenixLogContext<'a, 'info>,
         phoenix_market_context: &PhoenixMarketContext<'a, 'info>,
         phoenix_instruction: PhoenixInstruction,
@@ -123,7 +123,7 @@ impl<'info> EventRecorder<'info> {
     }
 
     /// Records Phoenix events via self-CPI
-    pub(crate) fn flush(&mut self) -> ProgramResult {
+    pub fn flush(&mut self) -> ProgramResult {
         let batch_size = self.state_tracker.get_batch_size();
         self.state_tracker.print_status();
         // Store the number of emitted events in the header to more easily decode the events
@@ -146,7 +146,7 @@ impl<'info> EventRecorder<'info> {
     /// Adds a MarketEvent to the current instruction. If the instruction data
     /// length will exceed the maximum inner instruction size after adding the new event, the
     /// existing events are flushed and recorded via CPI
-    pub(crate) fn add_event(&mut self, event: MarketEvent<Pubkey>) {
+    pub fn add_event(&mut self, event: MarketEvent<Pubkey>) {
         if self.error_code.is_some() {
             return;
         }
@@ -184,7 +184,7 @@ impl<'info> EventRecorder<'info> {
     }
 
     /// Increments the market sequence number and then emits the events
-    pub(crate) fn increment_market_sequence_number_and_flush(
+    pub fn increment_market_sequence_number_and_flush(
         &mut self,
         market_info: MarketAccountInfo<'_, 'info>,
     ) -> ProgramResult {
@@ -211,7 +211,7 @@ impl<'info> EventRecorder<'info> {
 
 /// This is a helper struct that tracks the state of events and event batching for the current instruction
 #[derive(Default)]
-pub(crate) struct EventStateTracker {
+pub struct EventStateTracker {
     /// The total number of event batches for the current instruction
     batch_index: usize,
 
@@ -223,7 +223,7 @@ pub(crate) struct EventStateTracker {
 }
 
 impl EventStateTracker {
-    pub(crate) fn print_status(&self) {
+    pub fn print_status(&self) {
         phoenix_log!(
             "Sending batch {} with header and {} market events, total events sent: {}",
             self.batch_index + 1,
@@ -232,20 +232,20 @@ impl EventStateTracker {
         );
     }
 
-    pub(crate) fn get_batch_size(&self) -> u16 {
+    pub fn get_batch_size(&self) -> u16 {
         self.events_added - self.events_emitted
     }
 
-    pub(crate) fn process_events(&mut self) {
+    pub fn process_events(&mut self) {
         self.events_emitted = self.events_added;
         self.batch_index += 1;
     }
 
-    pub(crate) fn add_event(&mut self) {
+    pub fn add_event(&mut self) {
         self.events_added += 1
     }
 
-    pub(crate) fn has_events_to_process(&self) -> bool {
+    pub fn has_events_to_process(&self) -> bool {
         self.batch_index == 0 || self.events_emitted < self.events_added
     }
 }

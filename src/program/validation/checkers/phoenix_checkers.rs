@@ -16,9 +16,9 @@ use std::{
 };
 
 #[derive(Clone)]
-pub(crate) struct MarketAccountInfo<'a, 'info> {
-    pub(crate) info: &'a AccountInfo<'info>,
-    pub(crate) size_params: MarketSizeParams,
+pub struct MarketAccountInfo<'a, 'info> {
+    pub info: &'a AccountInfo<'info>,
+    pub size_params: MarketSizeParams,
 }
 
 impl<'a, 'info> MarketAccountInfo<'a, 'info> {
@@ -37,7 +37,7 @@ impl<'a, 'info> MarketAccountInfo<'a, 'info> {
         })
     }
 
-    pub(crate) fn new(
+    pub fn new(
         info: &'a AccountInfo<'info>,
     ) -> Result<MarketAccountInfo<'a, 'info>, ProgramError> {
         let mut market_info = Self::_new_unchecked(info)?;
@@ -53,7 +53,7 @@ impl<'a, 'info> MarketAccountInfo<'a, 'info> {
         Ok(market_info)
     }
 
-    pub(crate) fn assert_reduce_allowed(&self) -> ProgramResult {
+    pub fn assert_reduce_allowed(&self) -> ProgramResult {
         let header = self.get_header()?;
         let status = MarketStatus::from(header.status);
         assert_with_msg(
@@ -63,7 +63,7 @@ impl<'a, 'info> MarketAccountInfo<'a, 'info> {
         )
     }
 
-    pub(crate) fn assert_cross_allowed(&self) -> ProgramResult {
+    pub fn assert_cross_allowed(&self) -> ProgramResult {
         let header = self.get_header()?;
         let status = MarketStatus::from(header.status);
         assert_with_msg(
@@ -76,7 +76,7 @@ impl<'a, 'info> MarketAccountInfo<'a, 'info> {
         )
     }
 
-    pub(crate) fn assert_post_allowed(&self) -> ProgramResult {
+    pub fn assert_post_allowed(&self) -> ProgramResult {
         let header = self.get_header()?;
         let status = MarketStatus::from(header.status);
         assert_with_msg(
@@ -89,7 +89,7 @@ impl<'a, 'info> MarketAccountInfo<'a, 'info> {
         )
     }
 
-    pub(crate) fn assert_valid_authority(&self, authority: &Pubkey) -> ProgramResult {
+    pub fn assert_valid_authority(&self, authority: &Pubkey) -> ProgramResult {
         let header = self.get_header()?;
         assert_with_msg(
             &header.authority == authority,
@@ -98,7 +98,7 @@ impl<'a, 'info> MarketAccountInfo<'a, 'info> {
         )
     }
 
-    pub(crate) fn assert_valid_successor(&self, successor: &Pubkey) -> ProgramResult {
+    pub fn assert_valid_successor(&self, successor: &Pubkey) -> ProgramResult {
         let header = self.get_header()?;
         assert_with_msg(
             &header.successor == successor,
@@ -107,7 +107,7 @@ impl<'a, 'info> MarketAccountInfo<'a, 'info> {
         )
     }
 
-    pub(crate) fn new_init(
+    pub fn new_init(
         info: &'a AccountInfo<'info>,
     ) -> Result<MarketAccountInfo<'a, 'info>, ProgramError> {
         let market_bytes = info.try_borrow_data()?;
@@ -136,14 +136,14 @@ impl<'a, 'info> MarketAccountInfo<'a, 'info> {
         })
     }
 
-    pub(crate) fn get_header(&self) -> Result<Ref<'_, MarketHeader>, ProgramError> {
+    pub fn get_header(&self) -> Result<Ref<'_, MarketHeader>, ProgramError> {
         let data = self.info.try_borrow_data()?;
         Ok(Ref::map(data, |data| {
             return MarketHeader::load_bytes(&data[..size_of::<MarketHeader>()]).unwrap();
         }))
     }
 
-    pub(crate) fn get_header_mut(&self) -> Result<RefMut<'_, MarketHeader>, ProgramError> {
+    pub fn get_header_mut(&self) -> Result<RefMut<'_, MarketHeader>, ProgramError> {
         let data = self.info.try_borrow_mut_data()?;
         Ok(RefMut::map(data, |data| {
             return MarketHeader::load_mut_bytes(&mut data[..size_of::<MarketHeader>()]).unwrap();
@@ -166,12 +166,12 @@ impl<'a, 'info> Deref for MarketAccountInfo<'a, 'info> {
 }
 
 #[derive(Clone)]
-pub(crate) struct SeatAccountInfo<'a, 'info> {
-    pub(crate) info: &'a AccountInfo<'info>,
+pub struct SeatAccountInfo<'a, 'info> {
+    pub info: &'a AccountInfo<'info>,
 }
 
 impl<'a, 'info> SeatAccountInfo<'a, 'info> {
-    pub(crate) fn new_with_context(
+    pub fn new_with_context(
         info: &'a AccountInfo<'info>,
         market: &Pubkey,
         trader: &Pubkey,
@@ -222,7 +222,7 @@ impl<'a, 'info> SeatAccountInfo<'a, 'info> {
         Ok(Self { info })
     }
 
-    pub(crate) fn new(
+    pub fn new(
         info: &'a AccountInfo<'info>,
         market: &Pubkey,
     ) -> Result<SeatAccountInfo<'a, 'info>, ProgramError> {
@@ -252,7 +252,7 @@ impl<'a, 'info> SeatAccountInfo<'a, 'info> {
         Ok(Self { info })
     }
 
-    pub(crate) fn load_mut(&self) -> Result<RefMut<'_, Seat>, ProgramError> {
+    pub fn load_mut(&self) -> Result<RefMut<'_, Seat>, ProgramError> {
         let data = self.info.try_borrow_mut_data()?;
         Ok(RefMut::map(data, |data| {
             return Seat::load_mut_bytes(&mut data.deref_mut()[..]).unwrap();

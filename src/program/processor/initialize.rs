@@ -65,7 +65,7 @@ pub struct InitializeParams {
     pub raw_base_units_per_base_unit: Option<u32>,
 }
 
-pub(crate) fn process_initialize_market<'a, 'info>(
+pub fn process_initialize_market<'a, 'info>(
     _program_id: &Pubkey,
     market_context: &PhoenixMarketContext<'a, 'info>,
     accounts: &'a [AccountInfo<'info>],

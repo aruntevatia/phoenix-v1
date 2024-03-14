@@ -33,7 +33,7 @@ pub struct CancelMultipleOrdersByIdParams {
     pub orders: Vec<CancelOrderParams>,
 }
 
-pub(crate) fn process_cancel_all_orders<'a, 'info>(
+pub fn process_cancel_all_orders<'a, 'info>(
     _program_id: &Pubkey,
     market_context: &PhoenixMarketContext<'a, 'info>,
     accounts: &'a [AccountInfo<'info>],
@@ -109,7 +109,7 @@ pub(crate) fn process_cancel_all_orders<'a, 'info>(
     Ok(())
 }
 
-pub(crate) fn process_cancel_up_to<'a, 'info>(
+pub fn process_cancel_up_to<'a, 'info>(
     _program_id: &Pubkey,
     market_context: &PhoenixMarketContext<'a, 'info>,
     accounts: &'a [AccountInfo<'info>],
@@ -139,7 +139,7 @@ pub(crate) fn process_cancel_up_to<'a, 'info>(
     )
 }
 
-pub(crate) fn process_cancel_multiple_orders_by_id<'a, 'info>(
+pub fn process_cancel_multiple_orders_by_id<'a, 'info>(
     _program_id: &Pubkey,
     market_context: &PhoenixMarketContext<'a, 'info>,
     accounts: &'a [AccountInfo<'info>],
@@ -246,7 +246,7 @@ pub(crate) fn process_cancel_multiple_orders_by_id<'a, 'info>(
 }
 
 #[allow(clippy::too_many_arguments)]
-pub(crate) fn process_cancel_orders<'a, 'info>(
+pub fn process_cancel_orders<'a, 'info>(
     market_info: &MarketAccountInfo<'a, 'info>,
     trader_key: &Pubkey,
     vault_context_option: Option<PhoenixVaultContext<'a, 'info>>,

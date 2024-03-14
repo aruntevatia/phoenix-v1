@@ -12,7 +12,7 @@ use solana_program::{
 use std::mem::size_of;
 
 /// This instruction is used to request a seat on the market by the market authority for a trader
-pub(crate) fn process_request_seat_authorized<'a, 'info>(
+pub fn process_request_seat_authorized<'a, 'info>(
     _program_id: &Pubkey,
     market_context: &PhoenixMarketContext<'a, 'info>,
     accounts: &'a [AccountInfo<'info>],
@@ -34,7 +34,7 @@ pub(crate) fn process_request_seat_authorized<'a, 'info>(
 }
 
 /// This instruction is used to request a seat on the market for a trader (by the trader)
-pub(crate) fn process_request_seat<'a, 'info>(
+pub fn process_request_seat<'a, 'info>(
     _program_id: &Pubkey,
     market_context: &PhoenixMarketContext<'a, 'info>,
     accounts: &'a [AccountInfo<'info>],
@@ -95,7 +95,7 @@ fn _create_seat<'a, 'info>(
 
 /// This instruction is used to modify a seat on the market
 /// The seat can be modified only by the market authority
-pub(crate) fn process_change_seat_status<'a, 'info>(
+pub fn process_change_seat_status<'a, 'info>(
     _program_id: &Pubkey,
     market_context: &PhoenixMarketContext<'a, 'info>,
     accounts: &'a [AccountInfo<'info>],

@@ -1,7 +1,7 @@
 use super::{Market, WritableMarket};
 
 /// Struct that holds an object implementing the WritableMarket trait.
-pub(crate) struct MarketWrapperMut<
+pub struct MarketWrapperMut<
     'a,
     MarketTraderId,
     MarketOrderId,
@@ -19,7 +19,7 @@ pub(crate) struct MarketWrapperMut<
 impl<'a, MarketTraderId, MarketOrderPacket, MarketRestingOrder, MarketOrderId>
     MarketWrapperMut<'a, MarketTraderId, MarketOrderId, MarketRestingOrder, MarketOrderPacket>
 {
-    pub(crate) fn new(
+    pub fn new(
         market: &'a mut dyn WritableMarket<
             MarketTraderId,
             MarketOrderId,

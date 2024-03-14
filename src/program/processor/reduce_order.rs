@@ -31,7 +31,7 @@ pub struct ReduceOrderParams {
     pub size: u64,
 }
 
-pub(crate) fn process_reduce_order<'a, 'info>(
+pub fn process_reduce_order<'a, 'info>(
     _program_id: &Pubkey,
     market_context: &PhoenixMarketContext<'a, 'info>,
     accounts: &'a [AccountInfo<'info>],

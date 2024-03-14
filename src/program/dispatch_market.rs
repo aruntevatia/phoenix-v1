@@ -30,7 +30,7 @@ macro_rules! fifo_market_size {
     };
 }
 
-pub(crate) fn load_with_dispatch_mut<'a>(
+pub fn load_with_dispatch_mut<'a>(
     market_size_params: &'a MarketSizeParams,
     bytes: &'a mut [u8],
 ) -> Result<MarketWrapperMut<'a, Pubkey, FIFOOrderId, FIFORestingOrder, OrderPacket>, ProgramError>
@@ -38,7 +38,7 @@ pub(crate) fn load_with_dispatch_mut<'a>(
     dispatch_market_mut(market_size_params, bytes, false)
 }
 
-pub(crate) fn load_with_dispatch_init<'a>(
+pub fn load_with_dispatch_init<'a>(
     market_size_params: &'a MarketSizeParams,
     bytes: &'a mut [u8],
 ) -> Result<MarketWrapperMut<'a, Pubkey, FIFOOrderId, FIFORestingOrder, OrderPacket>, ProgramError>
@@ -46,7 +46,7 @@ pub(crate) fn load_with_dispatch_init<'a>(
     dispatch_market_mut(market_size_params, bytes, true)
 }
 
-pub(crate) fn dispatch_market_mut<'a>(
+pub fn dispatch_market_mut<'a>(
     market_size_params: &'a MarketSizeParams,
     bytes: &'a mut [u8],
     is_initial: bool,

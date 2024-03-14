@@ -14,7 +14,7 @@ use solana_program::{
     pubkey::Pubkey,
 };
 
-pub(crate) fn process_collect_fees<'a, 'info>(
+pub fn process_collect_fees<'a, 'info>(
     _program_id: &Pubkey,
     market_context: &PhoenixMarketContext<'a, 'info>,
     accounts: &'a [AccountInfo<'info>],
@@ -57,7 +57,7 @@ pub(crate) fn process_collect_fees<'a, 'info>(
     Ok(())
 }
 
-pub(crate) fn process_change_fee_recipient<'a, 'info>(
+pub fn process_change_fee_recipient<'a, 'info>(
     _program_id: &Pubkey,
     market_context: &PhoenixMarketContext<'a, 'info>,
     accounts: &'a [AccountInfo<'info>],

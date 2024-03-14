@@ -23,7 +23,7 @@ pub struct WithdrawParams {
     pub base_lots_to_withdraw: Option<u64>,
 }
 
-pub(crate) fn process_withdraw_funds<'a, 'info>(
+pub fn process_withdraw_funds<'a, 'info>(
     _program_id: &Pubkey,
     market_context: &PhoenixMarketContext<'a, 'info>,
     accounts: &'a [AccountInfo<'info>],
@@ -49,7 +49,7 @@ pub(crate) fn process_withdraw_funds<'a, 'info>(
 }
 
 #[allow(clippy::too_many_arguments)]
-pub(crate) fn process_withdraw<'a, 'info>(
+pub fn process_withdraw<'a, 'info>(
     market_info: &MarketAccountInfo<'a, 'info>,
     trader: AccountInfo<'info>,
     vault_context: PhoenixVaultContext<'a, 'info>,

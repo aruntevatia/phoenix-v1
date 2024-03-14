@@ -15,7 +15,7 @@ pub struct DepositParams {
     pub base_lots_to_deposit: u64,
 }
 
-pub(crate) fn process_deposit_funds<'a, 'info>(
+pub fn process_deposit_funds<'a, 'info>(
     _program_id: &Pubkey,
     market_context: &PhoenixMarketContext<'a, 'info>,
     accounts: &'a [AccountInfo<'info>],

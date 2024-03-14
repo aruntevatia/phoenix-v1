@@ -23,7 +23,7 @@ use solana_program::{
 ///
 /// It will also withdraw all funds to token accounts owned by the trader, but it will fail
 /// if the trader has any open orders.
-pub(crate) fn process_evict_seat<'a, 'info>(
+pub fn process_evict_seat<'a, 'info>(
     _program_id: &Pubkey,
     market_context: &PhoenixMarketContext<'a, 'info>,
     accounts: &'a [AccountInfo<'info>],
@@ -47,7 +47,7 @@ pub(crate) fn process_evict_seat<'a, 'info>(
 
 /// This action can be taken by the market authority to cancel all orders of a
 /// trader whose seat is no longer approved
-pub(crate) fn process_force_cancel_orders<'a, 'info>(
+pub fn process_force_cancel_orders<'a, 'info>(
     _program_id: &Pubkey,
     market_context: &PhoenixMarketContext<'a, 'info>,
     accounts: &'a [AccountInfo<'info>],
@@ -69,7 +69,7 @@ pub(crate) fn process_force_cancel_orders<'a, 'info>(
 }
 
 /// This function can only be called by the active successor of the current authority.
-pub(crate) fn process_claim_authority<'a, 'info>(
+pub fn process_claim_authority<'a, 'info>(
     _program_id: &Pubkey,
     market_context: &PhoenixMarketContext<'a, 'info>,
     _data: &[u8],
@@ -85,7 +85,7 @@ pub(crate) fn process_claim_authority<'a, 'info>(
 
 /// The authority can be changed to a successor, but the successor must explicitly claim the 
 /// authority from the previous market authority
-pub(crate) fn process_name_successor<'a, 'info>(
+pub fn process_name_successor<'a, 'info>(
     _program_id: &Pubkey,
     market_context: &PhoenixMarketContext<'a, 'info>,
     data: &[u8],
@@ -102,7 +102,7 @@ pub(crate) fn process_name_successor<'a, 'info>(
 
 /// This function can only be called by the current market authority to
 /// modify the current market status (based on valid transitions)
-pub(crate) fn process_change_market_status<'a, 'info>(
+pub fn process_change_market_status<'a, 'info>(
     _program_id: &Pubkey,
     market_context: &PhoenixMarketContext<'a, 'info>,
     accounts: &'a [AccountInfo<'info>],
