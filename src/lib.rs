@@ -165,14 +165,19 @@ pub fn process_instruction(
         }
         PhoenixInstruction::PlaceLimitOrder => {
             phoenix_log!("PhoenixInstruction::PlaceLimitOrder");
-            new_order::process_place_limit_order(
+            let res = new_order::process_place_limit_order(
                 program_id,
                 &market_context,
                 accounts,
                 data,
                 &mut record_event_fn,
                 &mut order_ids,
-            )?
+            );
+            if res.is_err() {
+                return Err(res.err().unwrap());
+            } else {
+                return Ok(());
+            }
         }
         PhoenixInstruction::PlaceLimitOrderWithFreeFunds => {
             phoenix_log!("PhoenixInstruction::PlaceLimitOrderWithFreeFunds");

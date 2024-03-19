@@ -143,7 +143,7 @@ pub fn process_swap<'a, 'info>(
     accounts: &'a [AccountInfo<'info>],
     data: &[u8],
     record_event_fn: &mut dyn FnMut(MarketEvent<Pubkey>),
-) -> ProgramResult {
+) -> SwapProgramResult {
     sol_log_compute_units();
     let new_order_context = NewOrderContext::load_cross_only(market_context, accounts, false)?;
     let mut order_packet = decode_order_packet(data).ok_or_else(|| {
@@ -185,7 +185,7 @@ pub fn process_swap_with_free_funds<'a, 'info>(
     accounts: &'a [AccountInfo<'info>],
     data: &[u8],
     record_event_fn: &mut dyn FnMut(MarketEvent<Pubkey>),
-) -> ProgramResult {
+) -> SwapProgramResult {
     let new_order_context = NewOrderContext::load_cross_only(market_context, accounts, true)?;
     let mut order_packet = decode_order_packet(data).ok_or_else(|| {
         phoenix_log!("Failed to decode order packet");
@@ -225,7 +225,7 @@ pub fn process_place_limit_order<'a, 'info>(
     data: &[u8],
     record_event_fn: &mut dyn FnMut(MarketEvent<Pubkey>),
     order_ids: &mut Vec<FIFOOrderId>,
-) -> ProgramResult {
+) -> SwapProgramResult {
     let new_order_context = NewOrderContext::load_post_allowed(market_context, accounts, false)?;
     let mut order_packet = decode_order_packet(data).ok_or_else(|| {
         phoenix_log!("Failed to decode order packet");
@@ -266,7 +266,7 @@ pub fn process_place_limit_order_with_free_funds<'a, 'info>(
     data: &[u8],
     record_event_fn: &mut dyn FnMut(MarketEvent<Pubkey>),
     order_ids: &mut Vec<FIFOOrderId>,
-) -> ProgramResult {
+) -> SwapProgramResult {
     let new_order_context = NewOrderContext::load_post_allowed(market_context, accounts, true)?;
     let mut order_packet = decode_order_packet(data).ok_or_else(|| {
         phoenix_log!("Failed to decode order packet");
@@ -357,13 +357,22 @@ pub fn process_place_multiple_post_only_orders_with_free_funds<'a, 'info>(
     )
 }
 
+pub struct OrderResult {
+    quote_atoms_to_withdraw: QuoteAtoms,
+    quote_atoms_to_deposit: QuoteAtoms,
+    base_atoms_to_withdraw: BaseAtoms,
+    base_atoms_to_deposit: BaseAtoms,
+}
+
+pub type SwapProgramResult = std::result::Result<OrderResult, ProgramError>;
+
 pub fn process_new_order<'a, 'info>(
     new_order_context: NewOrderContext<'a, 'info>,
     market_context: &PhoenixMarketContext<'a, 'info>,
     order_packet: &mut OrderPacket,
     record_event_fn: &mut dyn FnMut(MarketEvent<Pubkey>),
     order_ids: &mut Vec<FIFOOrderId>,
-) -> ProgramResult {
+) -> SwapProgramResult {
     let PhoenixMarketContext {
         market_info,
         signer: trader,
@@ -403,7 +412,7 @@ pub fn process_new_order<'a, 'info>(
                 base_lots_available,
                 quote_lots_available,
             ) {
-                return Ok(());
+                return Err(PhoenixError::NewOrderError.into());
             }
         }
 
@@ -498,7 +507,13 @@ pub fn process_new_order<'a, 'info>(
         return Err(ProgramError::InsufficientFunds);
     }
 
-    Ok(())
+    let result = OrderResult {
+        base_atoms_to_deposit: base_atoms_to_deposit,
+        base_atoms_to_withdraw: base_atoms_to_withdraw,
+        quote_atoms_to_deposit: quote_atoms_to_deposit,
+        quote_atoms_to_withdraw: quote_atoms_to_withdraw,
+    };
+    Ok(result)
 }
 
 fn process_multiple_new_orders<'a, 'info>(
