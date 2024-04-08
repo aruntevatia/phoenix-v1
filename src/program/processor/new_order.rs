@@ -358,10 +358,10 @@ pub fn process_place_multiple_post_only_orders_with_free_funds<'a, 'info>(
 }
 
 pub struct OrderResult {
-    quote_atoms_to_withdraw: QuoteAtoms,
-    quote_atoms_to_deposit: QuoteAtoms,
-    base_atoms_to_withdraw: BaseAtoms,
-    base_atoms_to_deposit: BaseAtoms,
+    pub quote_atoms_to_withdraw: QuoteAtoms,
+    pub quote_atoms_to_deposit: QuoteAtoms,
+    pub base_atoms_to_withdraw: BaseAtoms,
+    pub base_atoms_to_deposit: BaseAtoms,
 }
 
 pub type SwapProgramResult = std::result::Result<OrderResult, ProgramError>;
