@@ -144,7 +144,7 @@ pub fn process_swap<'a, 'info>(
     data: &[u8],
     record_event_fn: &mut dyn FnMut(MarketEvent<Pubkey>),
 ) -> SwapProgramResult {
-    sol_log_compute_units();
+    //sol_log_compute_units();
     let new_order_context = NewOrderContext::load_cross_only(market_context, accounts, false)?;
     let mut order_packet = decode_order_packet(data).ok_or_else(|| {
         phoenix_log!("Failed to decode order packet");

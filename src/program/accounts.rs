@@ -26,7 +26,7 @@ pub fn get_discriminant<T>() -> Result<u64, ProgramError> {
                 ProgramError::InvalidAccountData
             })?,
     );
-    phoenix_log!("Discriminant for {} is {}", type_name, discriminant);
+    //phoenix_log!("Discriminant for {} is {}", type_name, discriminant);
     Ok(discriminant)
 }
 
@@ -63,10 +63,10 @@ pub struct MarketHeader {
     pub status: u64,
     pub market_size_params: MarketSizeParams,
     pub base_params: TokenParams,
-    base_lot_size: BaseAtomsPerBaseLot,
+    pub base_lot_size: BaseAtomsPerBaseLot,
     pub quote_params: TokenParams,
-    quote_lot_size: QuoteAtomsPerQuoteLot,
-    tick_size_in_quote_atoms_per_base_unit: QuoteAtomsPerBaseUnitPerTick,
+    pub quote_lot_size: QuoteAtomsPerQuoteLot,
+    pub tick_size_in_quote_atoms_per_base_unit: QuoteAtomsPerBaseUnitPerTick,
     pub authority: Pubkey,
     pub fee_recipient: Pubkey,
     pub market_sequence_number: u64,
