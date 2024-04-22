@@ -1259,7 +1259,7 @@ checksum = "e3148f5046208a5d56bcfc03053e3ca6334e51da8dfb19b6cdc8b306fae3283e"
 name = "phoenix-v1"
 version = "0.2.4"
 dependencies = [
- "borsh 0.10.3",
+ "borsh 0.9.3",
  "bytemuck",
  "ellipsis-macros",
  "itertools",

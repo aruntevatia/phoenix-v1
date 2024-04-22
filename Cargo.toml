@@ -30,7 +30,7 @@ shank = "=0.0.12"
 spl-token = { version = "3", features = ["no-entrypoint"] }
 spl-associated-token-account = { version = "1", features = [ "no-entrypoint" ] } 
 solana-program = "1.16"
-borsh = "0.10.3"
+borsh = "0.9.3"
 bytemuck = "1"
 lib-sokoban = "0.3.0" 
 num_enum = "0.5"
