@@ -92,22 +92,22 @@ pub fn maybe_invoke_deposit<'a, 'info>(
     trader: &AccountInfo<'info>,
 ) -> ProgramResult {
     if deposit_amount > 0 {
-        invoke(
-            &spl_token::instruction::transfer(
-                token_program.key,
-                deposit_account.key,
-                deposit_vault.key,
-                trader.key,
-                &[],
-                deposit_amount,
-            )?,
-            &[
-                token_program.as_ref().clone(),
-                deposit_account.as_ref().clone(),
-                deposit_vault.as_ref().clone(),
-                trader.as_ref().clone(),
-            ],
-        )?;
+        // invoke(
+        //     &spl_token::instruction::transfer(
+        //         token_program.key,
+        //         deposit_account.key,
+        //         deposit_vault.key,
+        //         trader.key,
+        //         &[],
+        //         deposit_amount,
+        //     )?,
+        //     &[
+        //         token_program.as_ref().clone(),
+        //         deposit_account.as_ref().clone(),
+        //         deposit_vault.as_ref().clone(),
+        //         trader.as_ref().clone(),
+        //     ],
+        // )?;
     }
     Ok(())
 }

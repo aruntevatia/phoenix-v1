@@ -186,20 +186,20 @@ pub fn process_initialize_market<'a, 'info>(
             space as u64,
             seeds,
         )?;
-        invoke(
-            &spl_token::instruction::initialize_account3(
-                &spl_token::id(),
-                token_account.key,
-                mint.key,
-                token_account.key,
-            )?,
-            &[
-                market_creator.as_ref().clone(),
-                token_account.clone(),
-                mint.clone(),
-                token_program.as_ref().clone(),
-            ],
-        )?;
+        // invoke(
+        //     &spl_token::instruction::initialize_account3(
+        //         &spl_token::id(),
+        //         token_account.key,
+        //         mint.key,
+        //         token_account.key,
+        //     )?,
+        //     &[
+        //         market_creator.as_ref().clone(),
+        //         token_account.clone(),
+        //         mint.clone(),
+        //         token_program.as_ref().clone(),
+        //     ],
+        // )?;
         bumps.push(bump);
     }
 
