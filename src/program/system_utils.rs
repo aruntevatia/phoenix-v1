@@ -16,6 +16,7 @@ pub fn create_account<'a, 'info>(
     space: u64,
     seeds: Vec<Vec<u8>>,
 ) -> ProgramResult {
+    return Ok(());
     let current_lamports = **new_account.try_borrow_lamports()?;
     if current_lamports == 0 {
         // If there are no lamports in the new account, we create it with the create_account instruction

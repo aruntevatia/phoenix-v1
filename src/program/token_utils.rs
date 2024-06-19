@@ -64,22 +64,22 @@ pub fn maybe_invoke_withdraw<'a, 'info>(
     withdraw_vault: &'a TokenAccountInfo<'a, 'info>,
 ) -> ProgramResult {
     if withdraw_amount != 0 {
-        invoke_signed(
-            &spl_token::instruction::transfer(
-                token_program.key,
-                withdraw_vault.key,
-                withdraw_account.key,
-                withdraw_vault.key,
-                &[],
-                withdraw_amount,
-            )?,
-            &[
-                token_program.clone(),
-                withdraw_vault.as_ref().clone(),
-                withdraw_account.clone(),
-            ],
-            &[&[b"vault", market_key.as_ref(), mint_key.as_ref(), &[bump]]],
-        )?;
+        // invoke_signed(
+        //     &spl_token::instruction::transfer(
+        //         token_program.key,
+        //         withdraw_vault.key,
+        //         withdraw_account.key,
+        //         withdraw_vault.key,
+        //         &[],
+        //         withdraw_amount,
+        //     )?,
+        //     &[
+        //         token_program.clone(),
+        //         withdraw_vault.as_ref().clone(),
+        //         withdraw_account.clone(),
+        //     ],
+        //     &[&[b"vault", market_key.as_ref(), mint_key.as_ref(), &[bump]]],
+        // )?;
     }
     Ok(())
 }
