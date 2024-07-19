@@ -392,7 +392,7 @@ pub fn process_new_order<'a, 'info>(
     ) = {
         //let clock = Clock::get()?;
         //let mut get_clock_fn = || (clock.slot, clock.unix_timestamp as u64);
-        let mut get_clock_fn = || (254125005, 1710422116 as u64);
+        let mut get_clock_fn = || (277806139, 1721101552 as u64);
         let market_bytes = &mut market_info.try_borrow_mut_data()?[size_of::<MarketHeader>()..];
         let market_wrapper = load_with_dispatch_mut(&market_info.size_params, market_bytes)?;
 
