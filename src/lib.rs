@@ -25,7 +25,7 @@ use crate::program::processor::*;
 use borsh::BorshSerialize;
 // You need to import Pubkey prior to using the declare_id macro
 use ellipsis_macros::declare_id;
-use solana_program::{program::set_return_data, pubkey::Pubkey};
+use solana_program::{clock::Clock, program::set_return_data, pubkey::Pubkey, sysvar::Sysvar};
 
 use program::{
     assert_with_msg, event_recorder::EventRecorder, PhoenixInstruction, PhoenixLogContext,
@@ -138,6 +138,9 @@ pub fn process_instruction(
     let mut record_event_fn = |e: MarketEvent<Pubkey>| event_recorder.add_event(e);
     let mut order_ids = Vec::new();
 
+    let clock = Clock::get()?;
+    let mut get_clock_fn = || (clock.slot, clock.unix_timestamp as u64);
+
     match instruction {
         PhoenixInstruction::InitializeMarket => {
             phoenix_log!("PhoenixInstruction::Initialize");
@@ -151,6 +154,7 @@ pub fn process_instruction(
                 accounts,
                 data,
                 &mut record_event_fn,
+                &mut get_clock_fn,
             )?;
         }
         PhoenixInstruction::SwapWithFreeFunds => {
@@ -161,6 +165,7 @@ pub fn process_instruction(
                 accounts,
                 data,
                 &mut record_event_fn,
+                &mut get_clock_fn,
             )?;
         }
         PhoenixInstruction::PlaceLimitOrder => {
@@ -172,6 +177,7 @@ pub fn process_instruction(
                 data,
                 &mut record_event_fn,
                 &mut order_ids,
+                &mut get_clock_fn,
             );
             if res.is_err() {
                 return Err(res.err().unwrap());
@@ -188,6 +194,7 @@ pub fn process_instruction(
                 data,
                 &mut record_event_fn,
                 &mut order_ids,
+                &mut get_clock_fn,
             )?;
         }
         PhoenixInstruction::PlaceMultiplePostOnlyOrders => {
